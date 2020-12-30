@@ -35,7 +35,7 @@ int main()
         return 0;
     }
 
-    priority_queue<pair<int, pair<int,int>>, vector<pair<int, pair<int,int>>>, greater<pair<int,pair<int,int> >>> pq;
+    priority_queue<pair<int, pair<int,int>>, vector<pair<int, pair<int,int>>>, greater<pair<int,pair<int,int>>> > pq;
     pq.push({A[1][1],{1,1}});
     while(!pq.empty()){
         int now_Y = pq.top().second.first;
