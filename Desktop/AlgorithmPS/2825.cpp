@@ -18,4 +18,5 @@ int32_t main() {
 		if (i & j) ans += cnt[i] * cnt[j];
 	}
 	cout << (ans - n >> 1) << '\n';
+    
 }
