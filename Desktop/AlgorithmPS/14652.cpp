@@ -6,6 +6,6 @@ int main()
 {
     int N, M, K;
     cin >> N >> M >> K;
-    cout << K / M << " " << K / N << endl;
+    cout << K / M << " " << K % M << endl;
     return 0;
 }
