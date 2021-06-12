@@ -76,7 +76,7 @@ int main()
         cin >> Y[i];
         y[i - 1] = base((double)Y[i], 0);
     }
-    reverse(y.begin(), y.end());
+    reverse(y.begin(), y.end()); // reverse
     for (int i = N; i < 2 * N; i++)
     {
         x[i] = x[i % N];
