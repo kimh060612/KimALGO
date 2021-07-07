@@ -2,7 +2,7 @@
 #include <cmath>
 #include <vector>
 #include <algorithm>
-#define INF 9e17
+#define INF 9e18
 
 using namespace std;
 typedef long long ll;
@@ -10,11 +10,24 @@ typedef long long ll;
 ll M;
 vector <pair<ll, ll>> V;
 
-ll combination(ll n, ll r) {
-	ll nCr = 1;
-	for (ll i = 0; i < r; i++) nCr *= (n - i);
-	for (ll i = 1; i <= r; i++) nCr /= i;
-	return nCr;
+unsigned long long combination(unsigned long long n, unsigned long long k) {
+	unsigned long long higher_idx;
+	unsigned long long lower_idx;
+	if(k > n-k) {
+		higher_idx = k;
+		lower_idx = n - k;
+	} else {
+		higher_idx = n - k;
+		lower_idx = k;
+	}
+	double product = 1.0;
+	double factor;
+	unsigned long long idx;
+	for(idx=n; idx>higher_idx; idx--) {
+		factor = (double)idx / double(lower_idx - (n - idx));
+		product *= factor;
+	}
+	return (unsigned long long)(product + 0.5);
 }
 
 ll search(ll k) {
@@ -49,7 +62,7 @@ int main() {
 	}
 
 	// else 
-	for (ll i = 2; i <= 30; i++)
+	for (ll i = 2; i <= 50; i++)
 	{
 		ll N = search(i);
 		if (N == -1) continue;
@@ -64,7 +77,7 @@ int main() {
 	V.erase(unique(V.begin(), V.end()), V.end());
 	
 	cout << V.size() << endl;
-	for (int i = 0; i < V.size(); i++)
+	for (long long i = 0; i < V.size(); i++)
 	{
 		cout << V[i].first << " " << V[i].second << "\n";
 	}
