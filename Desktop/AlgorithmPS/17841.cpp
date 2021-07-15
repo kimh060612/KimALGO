@@ -28,11 +28,6 @@ int main()
     {
         for (int j = 1; j <= 5; j++)
         {
-            // if (S[i].substr(0, j) == UNIST.substr(0, j)) {
-            //     // if (DP[i][j - 1] != -1)DP[i][j] = DP[i][j - 1] + 1;
-            //     DP[i][j] = 1;
-            //     continue;
-            // }
             int tmp = 0;
             for (int k = 1; k <= j; k++)
             {
