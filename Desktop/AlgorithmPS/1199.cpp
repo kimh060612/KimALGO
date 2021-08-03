@@ -1,61 +1,38 @@
-#include <iostream>
-#include <queue>
-#define MAX 1001
-
+#include <bits/stdc++.h>
 using namespace std;
+using ll = long long;
 
-int N, A[MAX][MAX];
-int degree[MAX];
+int n, a[1010][1010], id;
+stack<pair<int, int>> v[1010];
+vector<int> chk;
 
-void Euler(int node)
-{
-    for (int i = 1; i <= N; i++)
-    {
-        while (A[node][i])
-        {
-            A[node][i] --;
-            A[i][node] --;
-            Euler(i);
-        }
+void dfs(int u){
+    while(1){
+        while(!v[u].empty() && chk[v[u].top().second]) v[u].pop(); // 이미 쓰여진 간선이면 pop
+        if(v[u].empty()) break;
+
+        auto [x, y] = v[u].top(); v[u].pop();
+        chk[y] = 1, dfs(x); // y번 간선을 사용했음을 표시하고 알고리즘을 계속한다.
     }
-    cout << node << " ";
+
+    printf("%d ",u);
 }
 
-int main()
-{
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-    cin >> N;
-    for (int i = 1; i <= N; i++)
-    {
-        for (int j = 1; j <= N; j++)
-        {
-            cin >> A[i][j];
-            degree[i] += A[i][j];
-            degree[j] += A[i][j];
-        }
-    }
+int main(){
+    scanf("%d",&n);
+    for(int i=1;i<=n;i++) for(int j=1;j<=n;j++) scanf("%d",&a[i][j]);
 
-    bool canEuler = true;
-    for (int i = 1; i <= N; i++)
-    {
-        degree[i] /= 2;
-        if (degree[i] % 2 == 1)
-        {
-            canEuler = false;
-            break;
-        }
+    for(int i=1;i<=n;i++){
+    	for(int j=i+1;j<=n;j++){
+    		while(a[i][j]){
+    			a[i][j]--, id++;
+    			v[i].push({j, id}), v[j].push({i, id}); // 간선에 번호를 부여한다.
+    		}
+    	}
     }
+    chk.resize(id + 1);
 
-    if (canEuler)
-    {
-        Euler(1);
-        cout << endl;
-    }
-    else
-    {
-        cout << -1 << endl;
-    }
+    for(int i=1;i<=n;i++) if(v[i].size() % 2) return !printf("-1");
 
-    return 0;
+    dfs(1);
 }
