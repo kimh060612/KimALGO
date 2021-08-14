@@ -23,6 +23,6 @@ int main()
         DP[i][0] = 1;
         DP[i][i] = 1;
     }
-    cout << nCr(N, K) << endl;
+    cout << nCr(N, K) << endl; // .
     return 0;
 }
