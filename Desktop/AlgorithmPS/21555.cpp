@@ -22,7 +22,7 @@ int main()
 		DP[2][i] = min(DP[2][i - 1], DP[1][i - 1] + k) + B[i];
 	}
 
-	cout << min(DP[1][n], DP[2][n]) << endl;
+	cout << min(DP[1][n], DP[2][n]) << endl; // Hello
 
 	return 0;
 }
