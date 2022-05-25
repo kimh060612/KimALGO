@@ -1,44 +1,62 @@
-#include <iostream>
-
+#include<iostream>
 using namespace std;
 
-int F[30], DPmin[30], DPmax[30];
-int cnt = 3;
+const int MY_INT_MAX = 2000000000;
+int dp[1000000] = { 0 };
+int dp_2[1000000] = { 0 };
 
-int minNum(int n) 
-{
-    if (n <= 0) return 0;
-    int min_ = 987654321;
-    for (int i = 2; i < cnt; i++)
-    {
-        if (F[i] < n)min_ = min(min_, F[i - 1] * (n / F[i]) + minNum(n - F[i] * (n / F[i])));
-    }
-    return min_;
-}
+int max(int a, int b) { return a > b ? a : b; }
 
-int maxNum(int n) 
+void solution()
 {
-    if (n <= 0) return 0;
-    int max_ = -987654321;
-    for (int i = cnt - 1; i >= 2; i--)
-    {
-        if (F[i] < n)max_ = max(max_, F[i - 1] * (n / F[i]) + maxNum(n - F[i] * (n / F[i])));
-    }
-    return max_;
+	// code
+	int n;
+	cin >> n;
+	dp[0] = 0;
+	dp[1] = 1;
+	dp[2] = 2;
+	int now_idx = 2;
+	while (dp[now_idx] <= n)
+	{
+		++now_idx;
+		dp[now_idx] = dp[now_idx - 1] + dp[now_idx - 2];
+	}
+	int min_output = 0;
+	int max_output = 0;
+	int tmp_c = n;
+	if (tmp_c % 2 == 1)
+	{
+		tmp_c -= 3;
+		min_output += 2;
+	}
+	min_output += tmp_c / 2;
+	tmp_c = n;
+	dp_2[2] = 1;
+	dp_2[3] = 2;
+	dp_2[4] = 2;
+	dp_2[5] = 3;
+	dp_2[6] = 4;
+
+	for (int i = 7; i <= n; i++)
+	{
+		int now_max = -1;
+		int tmp_idx = 2;
+		while (dp[tmp_idx] <= i)
+		{
+			now_max = max(now_max, dp_2[dp[tmp_idx]] + dp_2[i - dp[tmp_idx]]);
+			tmp_idx++;
+		}
+		dp_2[i] = now_max;
+	}
+	cout << min_output << " " << dp_2[n];
+
 }
 
 int main()
 {
-    int n;
-    cin >> n;
-    F[1] = 1;
-    F[2] = 2;
-    while (F[cnt - 1] < 20000) 
-    {
-        F[cnt] = F[cnt - 1] + F[cnt - 2];
-        cnt ++;
-    }
-    
-    cout << minNum(n) << " " << maxNum(n) << endl;
-    return 0;
+	iostream::sync_with_stdio(0); 
+	cin.tie(NULL);
+	cout.tie(NULL);
+	solution();
+	return 0;
 }
