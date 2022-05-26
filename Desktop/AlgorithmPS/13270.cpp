@@ -49,6 +49,7 @@ void solution()
 		dp_2[i] = now_max;
 	}
 	cout << min_output << " " << dp_2[n];
+
 }
 
 int main()
