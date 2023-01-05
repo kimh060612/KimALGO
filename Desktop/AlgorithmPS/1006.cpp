@@ -1,14 +1,16 @@
 #include <iostream>
+#include <fstream>
 #include <string.h>
 #define MAXN 10001
  
 using namespace std;
 
 int N, W, A[MAXN * 2], cBind[10][MAXN * 2];
-int DP[MAXN * 2], check[MAXN * 2];
+int DP[10][MAXN * 2], check[MAXN * 2];
+
+ofstream fout("output.txt");
 
 int min(int a, int b) { return a < b ? a : b; }
-
 int positionInner(int a, int dir) {
     if (dir == 1) return N + a;
     else if (dir == 2) return (a == N ? 1 : a + 1);
@@ -21,33 +23,39 @@ int positionOutter(int a, int dir) {
     else return (a == (N + 1) ? (N == 1 ? 1 : 2 * N) : a - 1);
 }
 
-int search(int now) {
-    if (now > 2 * N) return 2 * N;
-    if (DP[now] != 0) return DP[now];
+int search(int now, int dir, int depth) {
+    if (DP[dir][now] != 0) return DP[dir][now];
 
-    int &ret = DP[now];
+    int &ret = DP[dir][now];
     ret = 2 * N;
-    int next = now + 1;
+    if (now == 6 && dir == 3) {
+        for (int i = 1; i <= 2 * N; i++)
+            fout << check[i] << " ";
+        fout << endl << endl;
+    }
     for (int i = 1; i <= 2 * N; i++)
     {
-        if (i == now) continue;
+        if (check[i]) continue;
         for (int j = 1; j <= 3; j++) {
             if (cBind[j][i]) {
                 int next_idx = i > N ? positionOutter(i, j) : positionInner(i, j);
-                if (!check[next_idx] && !check[i]) {
+                if (!check[next_idx]) {
                     check[next_idx] = 1;
                     check[i] = 1;
-                    ret = min(ret, search(i) - 1); // 한번 묶어서 처리하는 iteration ==> 개수를 줄이게됨!
+                    if (i == 1 && next_idx == 5) {
+                        for (int i = 1; i <= 2 * N; i++)
+                            fout << check[i] << " ";
+                        fout << endl << endl;
+                    }
+                    ret = min(ret, search(i, j, depth + 1) - 1); // 한번 묶어서 처리하는 iteration ==> 개수를 줄이게됨!
                     check[next_idx] = 0;
                     check[i] = 0;
                 }
-            } 
+            }
         }
-        if (!check[i]) {
-            check[i] = 1;
-            ret = min(ret, search(i)); // 갯수 줄이는 것에 기여하지 않는 iteration
-            check[i] = 0;
-        }
+        check[i] = 2;
+        ret = min(ret, search(i, 0, depth + 1)); // 갯수 줄이는 것에 기여하지 않는 iteration
+        check[i] = 0;
     }
     return ret;
 }
@@ -72,7 +80,7 @@ int main()
                     cBind[j][i] = 1;
             }
         }
-        int ans = search(0);
+        int ans = search(0, 0, 0);
         cout << ans << endl;
     }
     return 0;
