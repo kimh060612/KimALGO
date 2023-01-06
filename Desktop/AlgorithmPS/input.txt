@@ -1,0 +1,401 @@
+100
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
+2 2
+AB
+CD
+a
+2 2
+AB
+CD
+b
+2 2
+AB
+CD
+c
+2 2
+AB
+CD
+d
