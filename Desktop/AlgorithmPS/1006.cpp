@@ -6,9 +6,9 @@
 using namespace std;
 
 int N, W, A[MAXN * 2], cBind[10][MAXN * 2];
-int DP[10][MAXN * 2], check[MAXN * 2];
+int DP[10][10][MAXN * 2], check[MAXN * 2];
 
-ofstream fout("output.txt");
+ifstream fin("input.txt");
 
 int min(int a, int b) { return a < b ? a : b; }
 int positionInner(int a, int dir) {
@@ -23,16 +23,11 @@ int positionOutter(int a, int dir) {
     else return (a == (N + 1) ? (N == 1 ? 1 : 2 * N) : a - 1);
 }
 
-int search(int now, int dir, int depth) {
-    if (DP[dir][now] != 0) return DP[dir][now];
+int search(int now, int prev_dir, int dir, int depth) {
+    if (depth == 2 * N) return 2 * N;
+    int &ret = DP[dir][prev_dir][now];
+    if (ret != 987654321) return ret;
 
-    int &ret = DP[dir][now];
-    ret = 2 * N;
-    if (now == 6 && dir == 3) {
-        for (int i = 1; i <= 2 * N; i++)
-            fout << check[i] << " ";
-        fout << endl << endl;
-    }
     for (int i = 1; i <= 2 * N; i++)
     {
         if (check[i]) continue;
@@ -40,34 +35,36 @@ int search(int now, int dir, int depth) {
             if (cBind[j][i]) {
                 int next_idx = i > N ? positionOutter(i, j) : positionInner(i, j);
                 if (!check[next_idx]) {
-                    check[next_idx] = 1;
-                    check[i] = 1;
-                    if (i == 1 && next_idx == 5) {
-                        for (int i = 1; i <= 2 * N; i++)
-                            fout << check[i] << " ";
-                        fout << endl << endl;
-                    }
-                    ret = min(ret, search(i, j, depth + 1) - 1); // 한번 묶어서 처리하는 iteration ==> 개수를 줄이게됨!
+                    check[next_idx] = i;
+                    check[i] = next_idx;
+                    ret = min(ret, search(i, dir, j, depth + 2) - 1); // 한번 묶어서 처리하는 iteration ==> 개수를 줄이게됨!
                     check[next_idx] = 0;
                     check[i] = 0;
                 }
             }
         }
-        check[i] = 2;
-        ret = min(ret, search(i, 0, depth + 1)); // 갯수 줄이는 것에 기여하지 않는 iteration
+        check[i] = i;
+        ret = min(ret, search(i, dir, 0, depth + 1)); // 갯수 줄이는 것에 기여하지 않는 iteration
         check[i] = 0;
     }
+    for (int i = 1; i <= 2 * N; i++)
+        cout << check[i] << " ";
+    cout << " " << ret << endl << endl;
     return ret;
 }
 
 int main()
 {
-    int t;
-    cin >> t;
+    int t, c = 1;
+    fin >> t;
     while (t--) {
-        cin >> N >> W;
+        fin >> N >> W;
+        for (int i = 0; i <= 2 * N; i++)
+            for (int j = 0; j <= 3; j++)
+                for (int k = 0; k <= 3; k++)
+                    DP[j][k][i] = 987654321;
         for (int i = 1; i <= 2 * N; i++) {
-            cin >> A[i];
+            fin >> A[i];
         }
         for (int i = 1; i <= 2 * N; i++) {
             // 1개 소대로 1개 구역을 맡아야할때
@@ -80,8 +77,9 @@ int main()
                     cBind[j][i] = 1;
             }
         }
-        int ans = search(0, 0, 0);
-        cout << ans << endl;
+        int ans = search(0, 0, 0, 0);
+        cout << c << " " << ans << endl;
+        c++;
     }
     return 0;
 }
