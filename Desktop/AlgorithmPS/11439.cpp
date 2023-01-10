@@ -6,12 +6,13 @@
 using namespace std;
 using ll = long long;
 
-int isPrime[4000002];
-int NPrime[4000002];
-int N, K, M;
+ll isPrime[4000002];
+ll NPrime[4000002];
+vector<ll> primes(0);
+ll N, K, M;
     
 void Sieve() {
-    for (int i = 2; i <= (int)sqrt(N) + 1; i++) {
+    for (int i = 2; i * i <= N; i++) {
         for (int k = 2; i * k <= N; k ++) {
             if (!isPrime[k * i]) continue;
             isPrime[k * i] = 0;
@@ -19,56 +20,18 @@ void Sieve() {
     }
     isPrime[1] = 0;
 
-    vector<int> primes(0);
     for (int i = 2; i <= N; i++) {
         if (isPrime[i]) 
             primes.push_back(i);
     }
 
-    int tN, tNK;
-    for (int i = N; i >= K + 1; i --) {
-        if (isPrime[i]) {
-            NPrime[i]++;
-            continue;
-        }
-        int index = 0;
-        tN = i;
-        while (tN > 1) {
-            int iter = primes[index];
-            if (iter > tN) break;
-            if (isPrime[tN]) {
-                NPrime[tN] ++;
-                break;
-            }
-            while (tN % iter == 0) {
-                tN /= iter;
-                NPrime[iter] ++;
-            }
-            index++;
+    for (int i = 0; i < primes.size(); i++) {
+        int p = primes[i];
+        for (ll j = p; j <= N; j *= p) {
+            NPrime[i] += (N / j) - (K / j) - ((N - K) / j);
         }
     }
 
-    for (int i = N - K; i >= 2; i --) {
-        if (isPrime[i]) {
-            NPrime[i]--;
-            continue;
-        }
-        int index = 0;
-        tNK = i;
-        while (tNK > 1) {
-            int iter = primes[index];
-            if (iter > tNK) break;
-            if (isPrime[tNK]) {
-                NPrime[tNK] --;
-                break;
-            }
-            while (tNK % iter == 0) {
-                tNK /= iter;
-                NPrime[iter] --;
-            }
-            index++;
-        }
-    }
 }
 
 ll fpow(ll a, ll n) {
@@ -80,7 +43,7 @@ ll fpow(ll a, ll n) {
         a = (a * a) % M;
         n /= 2;
     }
-    return ret;
+    return ret % M;
 }
 
 int main()
@@ -93,10 +56,10 @@ int main()
     memset(isPrime, 1, sizeof(isPrime));
     Sieve();
     ll ans = 1;
-    
-    for (int i = 2; i <= N; i++) {
+    for (int i = 0; i < primes.size(); i++) {
         if (NPrime[i] == 0) continue;
-        ans = (ans * fpow(i, NPrime[i])) % M;
+        ans = (ans * fpow(primes[i], NPrime[i])) % M;
+        if (ans == 0) break;
     }
 
     cout << ans << endl;
