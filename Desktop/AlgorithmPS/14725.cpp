@@ -8,8 +8,6 @@ using namespace std;
 
 int N;
 vector<string> V[1001];
-vector<string> P[1001];
-map<string, int> A;
 
 bool compare(const vector<string> &i, const vector<string> &j) {
     int index = 0, e = i.size() < j.size() ? i.size() : j.size();
@@ -20,22 +18,45 @@ bool compare(const vector<string> &i, const vector<string> &j) {
     return i[e - 1] < j[e - 1];
 }
 
-void dfs(int depth, int now) {
-    if (V[now].size() <= depth) return;
+struct Node {
+    string food;
+    vector<Node> children;
+    Node () {
+        this->children = vector<Node>(0);
+    }
+} root;
 
-    for (int i = 0; i < depth; i++)
-        cout << "--";
-    cout << V[now][depth] << endl;
+void insert(Node &v, int depth, int index) {
+    if (depth >= V[index].size()) return;
+    string &ptr = V[index][depth];
 
-    for (int i = 1; i <= N; i++) {
-        if (V[now][depth].compare(V[i][depth]) == 0) {
-            dfs(depth + 1, i);
+    for (auto &n: v.children)
+        if (n.food == ptr) {
+            insert(n, depth + 1, index);
+            return;
         }
+    Node tmp;
+    tmp.food = ptr;
+    v.children.push_back(tmp);
+    insert(v.children.back(), depth + 1, index);
+}
+
+void dfs(Node v, int depth) {
+    for (int i = 0; i < depth - 1; i++) 
+        cout << "--";
+    if (depth != 0) cout << v.food << "\n";
+
+    for (auto n: v.children) {
+        dfs(n, depth + 1);
     }
 }
 
 int main()
 {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+
     cin >> N;
     for (int i = 1; i <= N; i++) {
         int K;
@@ -44,19 +65,15 @@ int main()
             string a;
             cin >> a;
             V[i].push_back(a);
-            if (j == 1) {
-                if (A.find(a) == A.end()) {
-                    A.insert({ a, i });
-                }
-            }
         }
     }
     sort(V + 1, V + 1 + N, compare);
 
-    for (auto con: A) {
-        dfs(0, con.second);
+    for (int i = 1; i <= N; i++) {
+        insert(root, 0, i);
     }
-    
+
+    dfs(root, 0);
 
     return 0;
 }
