@@ -8,8 +8,6 @@ using namespace std;
 using ll = long long;
 using iip = pair<ll, ll>;
 
-ifstream fin("input.txt");
-
 int n;
 iip P[100001];
 
