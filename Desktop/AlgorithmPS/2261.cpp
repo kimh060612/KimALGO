@@ -38,16 +38,22 @@ ll getMinDistance(int s, int e) {
     ll c = getMinDistance(mid, e);
     ll minDist = min(b, c);
 
-    // sort(P + s, P + e, compareByCoordX);
-    sort(P + s, P + e, compareByCoordY);
+    sort(P + s, P + e, compareByCoordX);
+    vector<iip> Indicies;
     for (int i = s; i <= e; i++) {
-        for (int j = i; j <= e; j++) {
-            if (i == j) continue;
-            if (abs(P[i].first - P[j].first) > minDist || abs(P[i].second - P[j].second) > minDist) break;
-            minDist = min(minDist, getSquareDistance(P[i], P[j]));
+        if (minDist <= abs(P[i].first - P[mid].first)) continue;
+        Indicies.push_back(P[i]);
+    }
+    if (Indicies.size() == 0) return minDist;
+    sort(Indicies.begin(), Indicies.end(), compareByCoordY);
+    for (int i = 0; i < Indicies.size(); i++) {
+        iip p1 = Indicies[i];
+        for (int j = i + 1; j < Indicies.size(); j++) {
+            iip p2 = Indicies[j];
+            if ((p1.second - p2.second) * (p1.second - p2.second) > minDist) break;
+            minDist = min(minDist, getSquareDistance(p1, p2));
         }
     }
-
     return minDist;
 }
 
@@ -57,9 +63,9 @@ int main()
     cin.tie(0);
     cout.tie(0);
 
-    cin >> n;
+    fin >> n;
     for (int i = 1; i <= n; i++) {
-        cin >> P[i].first >> P[i].second;
+        fin >> P[i].first >> P[i].second;
     }
     sort(P + 1, P + 1 + n, compareByCoordX);
     
