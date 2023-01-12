@@ -61,9 +61,9 @@ int main()
     cin.tie(0);
     cout.tie(0);
 
-    fin >> n;
+    cin >> n;
     for (int i = 1; i <= n; i++) {
-        fin >> P[i].first >> P[i].second;
+        cin >> P[i].first >> P[i].second;
     }
     sort(P + 1, P + 1 + n, compareByCoordX);
     
