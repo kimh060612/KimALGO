@@ -11,12 +11,12 @@ int V, Q, K;
 vector<int> G[1001];
 vector<int> T[1001];
 int Cost[1001][5];
-int tDP[1001][20][5];
+int tDP[1001][20][5][5];
 int check[1001]; // tDP의 업데이트가 끝난 Node.
 
-void search(int depth, int ncolor, int nowCost, int parent, int pcolor, int factor) {
+void search(int depth, int ncolor, int nowCost, int parent, int pcolor, int acolor, int factor) {
     if (T[parent].size() == depth) {
-        tDP[parent][nowCost % K][pcolor] = (tDP[parent][nowCost % K][pcolor] + factor) % Q;
+        tDP[parent][nowCost % K][pcolor][acolor] = (tDP[parent][nowCost % K][pcolor][acolor] + factor) % Q;
         return;
     }
 
@@ -25,44 +25,42 @@ void search(int depth, int ncolor, int nowCost, int parent, int pcolor, int fact
         if (pcolor == 2 && i == 2) continue;
         if (pcolor == 3 && i != 2) continue;
         for (int k = 0; k < K; k++) {
-            if (tDP[next][k][i] != 0) {
-                search(depth + 1, i, nowCost + k, parent, pcolor, (factor * tDP[next][k][i]) % Q);
+            if (tDP[next][k][i][pcolor] != 0) {
+                search(depth + 1, i, (nowCost + k) % K, parent, pcolor, acolor, (factor * tDP[next][k][i][pcolor]) % Q);
             }
         }
     }
 }
 
-void dfs(int now, int ncolor) {
+void dfs(int now, int ncolor, int pcolor) {
     if (T[now].size() == 0) {
         int m = Cost[now][ncolor] % K;
-        tDP[now][m][ncolor] = 1;
+        tDP[now][m][ncolor][pcolor] = 1;
         return;
     }
 
     for (int i = 0; i < T[now].size(); i++) {
         int next = T[now][i];
-        if (check[next]) continue;
         for (int j = 1; j <= 3; j++) {
             if (ncolor == 2 && j == 2) continue;
             if (ncolor == 3 && j != 2) continue;
-            dfs(next, j);
+            dfs(next, j, ncolor);
         }
         check[next] = 1; // 모든 색에 대해서 탐색이 끝나고 나면, 위의 노드에서 다시 탐색할 필요가 없음.
     }
 
     if (check[now]) return;
-    for (int i = 1; i <= 3; i++) {  
+    for (int i = 1; i <= 3; i++) {
         if (ncolor == 2 && i == 2) continue;
         if (ncolor == 3 && i != 2) continue;
         int next = T[now][0];
-        for (int k = 0; k < K; k++){
-            if (tDP[next][k][i] != 0) {
-                int nextCost = Cost[now][ncolor] + k;
-                search(1, i, nextCost, now, ncolor, tDP[next][k][i] % Q);
+        for (int k = 0; k < K; k++) {
+            if (tDP[next][k][i][ncolor] != 0) {
+                int nextCost = (Cost[now][ncolor] + k) % K;
+                search(1, i, nextCost, now, ncolor, pcolor, tDP[next][k][i][ncolor] % Q);
             }
         }
     }
-
     // cout << "R: ";
     // for (int k = 0; k < K; k++) {
     //     cout << tDP[now][k][1] << " ";
@@ -102,32 +100,44 @@ int main()
     for (int i = 1; i <= V; i++) {
         fin >> Cost[i][1] >> Cost[i][2] >> Cost[i][3];
     }
-    makeTree(1, 0);
-    T[0].push_back(1);
-    dfs(0, 0);
+    makeTree(1, 0);        
+    for (int i = 1; i <= 3; i++)
+        dfs(1, i, 0);
 
-    vector<int> Test = { 1, 2, 5, 3, 4, 6, 7 };
+    vector<int> Test = { 4 };
     for (int t : Test) {
         cout << t << endl;
-        cout << "R: ";
+        cout << "R: " << endl;
         for (int k = 0; k < K; k++) {
-            cout << tDP[t][k][1] << " ";
+            cout << k << ": "; 
+            for (int j = 0; j <= 3; j++)
+                cout << tDP[t][k][1][j] << " ";
+            cout << endl;
         }
         cout << endl;
-        cout << "G: ";
+        cout << "G: " << endl;
         for (int k = 0; k < K; k++) {
-            cout << tDP[t][k][2] << " ";
+            cout << k << ": "; 
+            for (int j = 0; j <= 3; j++)
+                cout << tDP[t][k][1][j] << " ";
+            cout << endl;
         }
         cout << endl;
-        cout << "B: ";
+        cout << "B: " << endl;
         for (int k = 0; k < K; k++) {
-            cout << tDP[t][k][3] << " ";
+            cout << k << ": "; 
+            for (int j = 0; j <= 3; j++)
+                cout << tDP[t][k][1][j] << " ";
+            cout << endl;
         }
         cout << endl << endl;
         getchar();
     }
 
-    cout << tDP[0][0][0] << "\n";
+    int ans = 0;
+    for (int i = 1; i <= 3; i++)
+        ans = (ans + tDP[1][0][i][0]) % Q;
 
+    cout << ans << "\n";
     return 0;
 }
