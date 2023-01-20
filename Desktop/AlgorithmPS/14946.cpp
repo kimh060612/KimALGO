@@ -26,7 +26,7 @@ void search(int depth, int ncolor, int nowCost, int parent, int pcolor, int fact
         if (pcolor == 3 && i != 2) continue;
         for (int k = 0; k < K; k++) {
             if (tDP[next][k][i] != 0) {
-                search(depth + 1, i, (nowCost + k) % K, parent, pcolor, factor * tDP[next][k][i]);
+                search(depth + 1, i, nowCost + k, parent, pcolor, (factor * tDP[next][k][i]) % Q);
             }
         }
     }
@@ -57,8 +57,8 @@ void dfs(int now, int ncolor) {
         int next = T[now][0];
         for (int k = 0; k < K; k++){
             if (tDP[next][k][i] != 0) {
-                int nextCost = (Cost[now][ncolor] + k) % K;
-                search(1, i, nextCost, now, ncolor, tDP[next][k][i]);
+                int nextCost = Cost[now][ncolor] + k;
+                search(1, i, nextCost, now, ncolor, tDP[next][k][i] % Q);
             }
         }
     }
@@ -103,9 +103,8 @@ int main()
         fin >> Cost[i][1] >> Cost[i][2] >> Cost[i][3];
     }
     makeTree(1, 0);
-        
-    for (int i = 1; i <= 3; i++)
-        dfs(1, i);
+    T[0].push_back(1);
+    dfs(0, 0);
 
     vector<int> Test = { 1, 2, 5, 3, 4, 6, 7 };
     for (int t : Test) {
@@ -128,11 +127,7 @@ int main()
         getchar();
     }
 
-    int ans = 0;
-    for (int i = 1; i <= 3; i++)
-        ans = (ans + tDP[1][0][i]) % Q;
-
-    cout << ans << "\n";
+    cout << tDP[0][0][0] << "\n";
 
     return 0;
 }
