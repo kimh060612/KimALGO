@@ -100,8 +100,7 @@ int main()
     for (int i = 1; i <= V; i++) {
         fin >> Cost[i][1] >> Cost[i][2] >> Cost[i][3];
     }
-    makeTree(1, 0);
-        
+    makeTree(1, 0);        
     for (int i = 1; i <= 3; i++)
         dfs(1, i, 0);
 
@@ -140,6 +139,5 @@ int main()
         ans = (ans + tDP[1][0][i][0]) % Q;
 
     cout << ans << "\n";
-
     return 0;
 }
