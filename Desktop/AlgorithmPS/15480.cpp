@@ -4,10 +4,12 @@ using namespace std;
 
 int N, M;
 vector<int> T[100001];
-int parent[100001], depth[100001];
+int parent[100001][17], depth[100001];
 
-int dfs(int x, int parent) {
-    
+int dfs(int x, int depth) {
+    for (int nx: T[x]) {
+        
+    }
 }
 
 
