@@ -11,7 +11,6 @@ vector<int> G[1001];
 vector<int> T[1001];
 int Cost[1001][5];
 int tDP[1001][5][15];
-int tMem[1001][5];
 
 bool canMake(int nowColor, int nxColor) {
     if (nowColor == 1) return true;
