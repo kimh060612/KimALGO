@@ -11,7 +11,7 @@
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}/${fileBasenameNoExtension}"
+                "${fileDirname}/binaries/${fileBasenameNoExtension}"
             ],
             "options": {
                 "cwd": "${fileDirname}"
