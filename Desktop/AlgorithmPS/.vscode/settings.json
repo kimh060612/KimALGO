@@ -1,5 +1,7 @@
 {
     "files.associations": {
+        "*.erd": "json",
+        "*.vuerd": "json",
         "iostream": "cpp",
         "iosfwd": "cpp",
         "chrono": "cpp",
@@ -72,6 +74,8 @@
         "__functional_base": "cpp",
         "functional": "cpp",
         "iterator": "cpp",
-        "utility": "cpp"
+        "utility": "cpp",
+        "__verbose_abort": "cpp",
+        "charconv": "cpp"
     }
 }
